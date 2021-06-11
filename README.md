@@ -1,0 +1,2 @@
+# website_starter
+Gulpを使用しWebサイトを制作するための環境を作成する。
