@@ -12,6 +12,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        use: "ts-loader",
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
@@ -24,6 +28,11 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: [
+      ".ts", ".js",
+    ],
   },
   plugins: [
     new webpack.ProvidePlugin(setting.webpack.providePlugin(setting.webpack.jqueryNecessary)),

@@ -1,17 +1,30 @@
 {
+  
   "env": {
     "browser": true,
-    "commonjs": true,
     "es6": true,
     "node": true,
-    "jquery": true
+    "es2017": true
   },
-  "extends": "eslint:recommended",
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2019,
     "sourceType": "module"
   },
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "no-dupe-else-if": "off",
     "no-import-assign": "off",
     "no-setter-return": "off",

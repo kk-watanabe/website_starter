@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "es2020",
+    "lib": [
+      "es2020", "dom"
+    ],
+    "target": "es2019",
+    "strict": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    /**
+			To have warnings/errors of the Svelte compiler at the correct position,
+			enable source maps by default.
+			*/
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

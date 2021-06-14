@@ -26,9 +26,9 @@ const pathSetting = {
     src: assets.src + "sass/**/*.s+(a|c)ss",
     dest: assets.dest + "css/",
   },
-  js: {
-    src: assets.src + "js/",
-    dest: assets.dest + "js/",
+  script: {
+    src: assets.src + "script/",
+    dest: assets.dest + "script/",
   },
   image: {
     src: assets.src + "img/**/*.+(jpg|jpeg|png|gif|svg)",
@@ -70,7 +70,6 @@ const setting = {
       return option;
     }
   },
-
   //画像の圧縮関連設定
   //必要であれば変更
   imagemin: {
@@ -87,7 +86,6 @@ const setting = {
       ]
     },
   },
-
   //Webpackの設定
   webpack: {
     // モード値を production に設定すると最適化された状態で、
@@ -95,12 +93,12 @@ const setting = {
     mode: "development",
 
     //編集ファイル
-    entry: `./${pathSetting.js.src}common.js`,
+    entry: `./${pathSetting.script.src}index.ts`,
 
     //出力ファイル
     output: {
-      path: path.join(__dirname, pathSetting.js.dest),
-      filename: "bundle.js"
+      path: path.join(__dirname, pathSetting.script.dest),
+      filename: "script.js"
     },
 
     //jQueryを使用しない場合はfalse
@@ -118,19 +116,12 @@ const setting = {
       return plugin;
     }
   },
-
-  //ejsの設定
-  ejs: {
-    space: true,
-    ext: ".html"
-  },
-
   //フォルダのパスを取得し整形
   getSiteData: (file) => {
     const allPath = file.path.split("\\").join("/");
     const allPaths = allPath.split("/ejs/");
     const path = allPaths[1].replace(".ejs", "").split("/");
-    const pathUrl= allPaths[1].replace(".ejs", ".html");
+    const pathUrl = allPaths[1].replace(".ejs", ".html");
 
     return {
       fileUrl: `/${pathUrl}`,

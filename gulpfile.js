@@ -8,37 +8,24 @@ const webpack = require("webpack");
 const webpackConfig = require("./webpack.config");
 const path = require("path");
 
+const ERRORR_MESSAGE = "Error: <%= error.message %>";
+const errorPlumber = () => {
+  return $.plumber({
+    errorHandler: $.notify.onError(ERRORR_MESSAGE)
+  });
+};
+
 // HTML
 gulp.task("html", () => {
   return gulp.src(paths.html.src)
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>")
-    }))
+    .pipe(errorPlumber())
     .pipe($.data(file => {
       //フォルダのパスを取得し整形
       return setting.getSiteData(file);
     }))
-    .pipe($.ejs({meta}, {rmWhitespace: setting.ejs.space}, {ext: setting.ejs.ext}))
+    .pipe($.ejs({ meta }, { rmWhitespace: true }))
+    .pipe($.rename({ extname: ".html" }))
     .pipe($.changed(paths.html.dest))
-    .pipe(gulp.dest(paths.html.dest))
-    .pipe($.browserSync.reload({ stream: true }));
-});
-
-// HTML
-gulp.task("include", () => {
-  return gulp.src(paths.html.src)
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
-    .pipe($.data(file => {
-      //フォルダのパスを取得し整形
-      return setting.getSiteData(file);
-    }))
-    .pipe($.ejs(
-      { meta },
-      { rmWhitespace: setting.ejs.space },
-      { ext: setting.ejs.ext }
-    ))
     .pipe(gulp.dest(paths.html.dest))
     .pipe($.browserSync.reload({ stream: true }));
 });
@@ -47,9 +34,7 @@ gulp.task("include", () => {
 gulp.task("htmlhint", () => {
   return gulp.src(paths.html.dest + "/**/*.html")
     .pipe($.htmlhint("./.htmlhintrc"))
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>")
-    }))
+    .pipe(errorPlumber())
     .pipe($.htmlhint.failOnError())
     .pipe($.changed(paths.html.dest));
 });
@@ -57,11 +42,9 @@ gulp.task("htmlhint", () => {
 // JSON
 gulp.task("json", () =>{
   return gulp.src(paths.json.src)
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
-    .pipe($.changed(paths.js.dest))
-    .pipe(gulp.dest(paths.js.dest))
+    .pipe(errorPlumber())
+    .pipe($.changed(paths.script.dest))
+    .pipe(gulp.dest(paths.script.dest))
     .pipe($.browserSync.reload({stream: true}));
 });
 
@@ -74,23 +57,19 @@ const imageminOptions = [
 // 画像の圧縮
 gulp.task("imagemin", () => {
   return gulp.src(paths.image.src)
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
+    .pipe(errorPlumber())
     .pipe($.changed(paths.image.dest))
     .pipe($.imagemin(imageminOptions))
     .pipe(gulp.dest(paths.image.dest))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
-// JavaScript
-gulp.task("js", () => {
-  return gulp.src(paths.js.src + "**/*.js")
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
+// JavaScript (TypeScript)
+gulp.task("script", () => {
+  return gulp.src(paths.script.src + "**/*.ts")
+    .pipe(errorPlumber())
     .pipe($.webpackStream(webpackConfig, webpack))
-    .pipe(gulp.dest(paths.js.dest))
+    .pipe(gulp.dest(paths.script.dest))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
@@ -101,9 +80,7 @@ gulp.task("scss",() => {
     .pipe($.sassLint({
       configFile: "./.sass-lint.yml"
     }))
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
+    .pipe(errorPlumber())
     .pipe($.sassLint.format())
     .pipe($.sassLint.failOnError())
     .pipe($.sass({ outputStyle: "compressed" }))
@@ -120,9 +97,7 @@ gulp.task("scss",() => {
 // SVG
 gulp.task("svg", () => {
   return gulp.src(paths.svg.src)
-    .pipe($.plumber({
-      errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
-    }))
+    .pipe(errorPlumber())
     .pipe($.svgmin((file) => {
       const prefix = path.basename(file.relative, path.extname(file.relative));
 
@@ -150,7 +125,7 @@ gulp.task("clean", $.del.bind(null, paths.base.dest));
 gulp.task("build",
   gulp.series(
     "clean",
-    gulp.parallel("html", "js", "scss", "json"),
+    gulp.parallel("html", "script", "scss", "json"),
     gulp.parallel("svg", "imagemin", "htmlhint")
   )
 );
@@ -160,9 +135,9 @@ gulp.task("watch", () => {
   $.browserSync.init({ server: { baseDir : paths.base.dest } });
 
   gulp.watch(paths.sass.src, gulp.task("scss"));
-  gulp.watch(paths.js.src + "**/*.js", gulp.task("js"));
+  gulp.watch(paths.script.src + "**/*.ts", gulp.task("script"));
   gulp.watch(paths.html.src, gulp.series("html", "htmlhint"));
-  gulp.watch(paths.include.src, gulp.task("include"));
+  gulp.watch(paths.include.src, gulp.task("html"));
   gulp.watch(paths.json.src, gulp.task("json"));
   gulp.watch(paths.image.src, gulp.task("imagemin"));
 });
