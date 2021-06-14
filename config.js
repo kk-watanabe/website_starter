@@ -17,7 +17,7 @@ const assets = {
 };
 
 //pashの指定
-const path_setting = {
+const pathSetting = {
   base: {
     src: base.src,
     dest: base.dest
@@ -50,13 +50,13 @@ const path_setting = {
     ],
     dest: base.dest,
   },
-  meta_data: "./gulpfile/meta_data.json"
+  meta: "./meta.json"
 };
 
 //各モジュールの設定
 const setting = {
   //metaデータ
-  meta: JSON.parse(fs.readFileSync(path_setting.meta_data)),
+  meta: JSON.parse(fs.readFileSync(pathSetting.meta)),
   //ブラウザバージョン管理
   autoprefixer: {
     browser: ["last 2 versions"]
@@ -99,35 +99,34 @@ const setting = {
     mode: "development",
 
     //編集ファイル
-    entry: `./${path_setting.js.src}common.js`,
+    entry: `./${pathSetting.js.src}common.js`,
 
     //出力ファイル
     output: {
-      path: path.join(__dirname, path_setting.js.dest),
+      path: path.join(__dirname, pathSetting.js.dest),
       filename: "bundle.js"
     },
 
     //jQueryを使用しない場合はfalse
-    jqueryNecessary: true,
+    jqueryNecessary: false,
 
     //uglifyの設定
     uglifyJsPlugin: {
-        sourceMap    : true,
-        uglifyOptions: {
-            mangle  : false,
-            output  : {comments: false},
-            compress: {warnings: false}
-        }
+      sourceMap: true,
+      uglifyOptions: {
+        mangle: false,
+        output: { comments: false },
+        compress: { warnings: false }
+      }
     },
 
     //jQueryを使用する場合に実行
-    //
     providePlugin : (judge) => {
       let plugin = {};
 
       if(judge) {
-        plugin["jQuery"] = "jquery";
-        plugin["$"]      = "jquery";
+        plugin["jQuery"]= "jquery";
+        plugin["$"]= "jquery";
       }
 
       return plugin;
@@ -135,30 +134,30 @@ const setting = {
   },
 
   //ejsの設定
-  ejs    : {
+  ejs: {
     space: true,
-    ext  : ".html"
+    ext: ".html"
   },
 
   //フォルダのパスを取得し整形
-  getSiteData  : (file) => {
-    const allPath   = file.path.split("\\").join("/");
-    const allPaths  = allPath.split("/ejs/");
-    const path = allPaths[1].replace(".ejs", ").split("/");
-    const path_url  = allPaths[1].replace(".ejs", ".html");
+  getSiteData: (file) => {
+    const allPath = file.path.split("\\").join("/");
+    const allPaths = allPath.split("/ejs/");
+    const path = allPaths[1].replace(".ejs", "").split("/");
+    const pathUrl= allPaths[1].replace(".ejs", ".html");
 
     return {
-      "fileUrl"   : "/" + path_url,
-      "fileName"  : path,
-      "folderPath": setting.getFolderPass(path)
-    }
+      fileUrl: `/${pathUrl}`,
+      fileName: path,
+      folderPath: setting.getFolderPass(path)
+    };
   },
 
   // 「 ../ 」をdataの数で出力する
   getFolderPass: (data) => {
     const pathTxt = "../";
 
-    let addPath = ";
+    let addPath = "";
 
     for (var i = 0; i < data.length; i++) {
       addPath = addPath + pathTxt;
@@ -171,31 +170,29 @@ const setting = {
 /**
  * ロードモジュールの設定
  */
-const load_plugins = {
+const loadPlugins = {
   pattern: [
     "gulp-*",
     "gulp.*",
     "browser-sync",
-    "run-sequence",
     "imagemin-*",
     "webpack-*",
     "del"
   ],
   rename: {
-    "browser-sync"     : "browserSync",
-    "run-sequence"     : "sequence",
-    "del"              : "del",
-    "imagemin-svgo"    : "imageminSvgo",
+    "browser-sync": "browserSync",
+    "del": "del",
+    "imagemin-svgo": "imageminSvgo",
     "imagemin-jpegtran": "imageminJpeg",
-    "imagemin-optipng" : "imageminPng",
-    "webpack-stream"   : "webpackStream",
-    "gulp-connect-php" : "connect"
+    "imagemin-optipng": "imageminPng",
+    "webpack-stream": "webpackStream",
+    "gulp-connect-php": "connect"
   }
 };
 
 module.exports = {
-  base       : assets,
-  paths      : path_setting,
-  setting    : setting,
-  loadPlugins: load_plugins,
-}
+  base: assets,
+  paths: pathSetting,
+  setting: setting,
+  loadPlugins: loadPlugins,
+};

@@ -19,14 +19,13 @@ module.exports = {
           {
             loader: "eslint-loader",
             options: {
-              configFile : "../.eslintrc.json",
+              configFile : "./.eslintrc.json",
             }
           }
         ]
       }
     ]
   },
-  devtool: "#source-map",
   plugins: [
     new webpack.ProvidePlugin(setting.webpack.providePlugin(setting.webpack.jqueryNecessary)),
     new UglifyJsPlugin(setting.webpack.uglifyJsPlugin)
@@ -44,4 +43,4 @@ module.exports = {
         ]
         : [],
   }
-}
+};
