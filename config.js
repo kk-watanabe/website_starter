@@ -110,16 +110,6 @@ const setting = {
     //jQueryを使用しない場合はfalse
     jqueryNecessary: false,
 
-    //uglifyの設定
-    uglifyJsPlugin: {
-      sourceMap: true,
-      uglifyOptions: {
-        mangle: false,
-        output: { comments: false },
-        compress: { warnings: false }
-      }
-    },
-
     //jQueryを使用する場合に実行
     providePlugin : (judge) => {
       let plugin = {};

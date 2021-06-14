@@ -33,7 +33,6 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^9.0.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.38.1",
     "webpack-stream": "^6.1.2"
   },
