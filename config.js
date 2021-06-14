@@ -57,10 +57,6 @@ const pathSetting = {
 const setting = {
   //metaデータ
   meta: JSON.parse(fs.readFileSync(pathSetting.meta)),
-  //ブラウザバージョン管理
-  autoprefixer: {
-    browser: ["last 2 versions"]
-  },
   //SVGの設定
   svg: {
     plugin: (pre) => {
@@ -167,7 +163,7 @@ const loadPlugins = {
     "browser-sync",
     "imagemin-*",
     "webpack-*",
-    "del"
+    "del",
   ],
   rename: {
     "browser-sync": "browserSync",

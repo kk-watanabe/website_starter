@@ -108,7 +108,7 @@ gulp.task("scss",() => {
     .pipe($.sassLint.failOnError())
     .pipe($.sass({ outputStyle: "compressed" }))
     .pipe($.postcss([
-      require("autoprefixer")({ browsers: setting.autoprefixer.browser }),
+      require("autoprefixer"),
       require("css-mqpacker")
     ]))
     .pipe($.csso())

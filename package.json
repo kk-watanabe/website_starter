@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
+    "autoprefixer": "^10.2.6",
     "browser-sync": "^2.26.14",
     "css-mqpacker": "^7.0.0",
     "del": "^6.0.0",
     "eslint": "^7.28.0",
     "eslint-loader": "^2.1.1",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
     "gulp-changed": "^4.0.2",
     "gulp-cheerio": "^1.0.0",
     "gulp-csso": "^4.0.1",
@@ -33,6 +33,7 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^9.0.0",
+    "postcss": "^8.3.3",
     "webpack": "^5.38.1",
     "webpack-stream": "^6.1.2"
   },
