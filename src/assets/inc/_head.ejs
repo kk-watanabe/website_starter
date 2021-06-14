@@ -1,0 +1,47 @@
+<%- include('./data/_units'); %>
+<% const meta = getFileMeta(fileName); %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title><%= meta.title; %></title>
+
+<meta name="description" content="<%= meta.description; %>">
+<meta name="keywords" content="">
+
+<meta property="og:url" content="<%= siteUrl + fileUrl; %>">
+<meta property="og:title" content="<%= meta.title; %>">
+<meta property="og:description" content="<%= meta.description; %>">
+
+<% if (meta.body_id === 'index') { %>
+<meta property="og:type" content="website">
+<% } else { %>
+<meta property="og:type" content="article">
+<% } %>
+
+<meta property="og:site_name" content="<%= siteName; %>">
+<meta property="og:image" content="<%= ogImg; %>">
+<meta property="og:locale" content="<%= ogLocale; %>">
+
+<meta name="twitter:card" content="<%= twiiterCard; %>">
+<meta name="twitter:site" content="<%= twitterSite; %>">
+<meta name="twitter:domain" content="<%= twiiterDomein; %>">
+<meta name="twitter:title" content="<%= meta.title; %>">
+<meta name="twitter:description" content="<%= meta.description; %>">
+<meta name="twitter:image" content="<%= ogImg; %>">
+
+<link rel="canonical" href="<%= siteUrl + fileUrl; %>">
+
+<link href="/assets/img/favicon.ico" rel="icon">
+<link href="/assets/img/webclip.png" rel="apple-touch-icon-precomposed">
+
+<link href="/assets/css/style.css" rel="stylesheet">
+
+<%- include('./_tag'); %>
+
+</head>
+<body id="<%= meta.body_id; %>">

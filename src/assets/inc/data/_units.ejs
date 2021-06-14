@@ -1,0 +1,31 @@
+<%
+////////////////////////////////
+//グローバル変数・定数・関数の設定
+////////////////////////////////
+
+//プロジェクト管理
+siteName  = 'site名';
+siteUrl   = 'http://dummy.com';
+siteEmail = 'no-reply@dummy.com';
+
+//SNS管理
+ogImg    = siteUrl + '/assets/common/dummy.png';
+ogLocale = 'ja_JP';
+
+twiiterCard   = 'summary';
+twiiterDomein = 'Twitterユーザー名';
+twitterSite   = '@' + twiiterDomein;
+
+//ファイルのmeta情報を取得
+getFileMeta = function(path) {
+	let lastpPath = meta;
+
+	for (let i = 0; i < path.length; i++) {
+		const name = path[i];
+
+		lastpPath = lastpPath[name];
+	}
+
+	return lastpPath;
+};
+%>

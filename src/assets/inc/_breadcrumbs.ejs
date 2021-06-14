@@ -1,0 +1,38 @@
+<%
+	//パスの数を取得
+	const numLayers = fileName.length;
+	const last      = getFileMeta(fileName);
+%>
+<% if (numLayers > 0) { -%>
+<div class="l-breadcrumbs">
+	<ol class="l-breadcrumbs__in" itemscope itemtype="http://schema.org/BreadcrumbList">
+		<li class="l-breadcrumbs__list" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a href="/" itemprop="item" class="l-breadcrumbs__anc">
+				<span itemprop="name" class="l-breadcrumbs__txt">HOME</span>
+			</a>
+			<meta itemprop="position" content="<%= numLayers; %>">
+		</li>
+
+		<%
+			//第三階層の場合のカテゴリリスト
+			if (numLayers === 3) {
+				const cateName = meta[fileName[0]]['index'].breadcrumb;
+				const cateUrl  = '/' + meta[fileName[0]] + '/';
+		-%>
+		<li class="l-breadcrumbs__list" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a href="<%= cateUrl; %>" itemprop="item" class="l-breadcrumbs__anc">
+				<span itemprop="name" class="l-breadcrumbs__txt"><%= cateName; %></span>
+			</a>
+			<meta itemprop="position" content="2">
+		</li>
+		<% } -%>
+
+		<li class="l-breadcrumbs__list" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a href="<%= fileUrl; %>" itemprop="item" class="l-breadcrumbs__anc is-notAnc">
+				<span itemprop="name" class="l-breadcrumbs__txt"><%= last.breadcrumb; %></span>
+			</a>
+			<meta itemprop="position" content="1">
+		</li>
+	</ol>
+</div>
+<% } -%>

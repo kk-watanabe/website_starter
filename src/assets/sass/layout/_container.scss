@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------
+*全体
+------------------------------------------------------------*/
+/*-----aタグの制御-----*/
+a {
+	// PCへ切り替え
+	@include media_querys($pc_break_w) {
+		text-decoration : none;
+
+		&:hover {
+			text-decoration : underline;
+		}
+	}
+
+	// SPへ切り替え
+	@include media_querys(0, $sp_break_w) {
+		text-decoration : underline;
+	}
+}
+
+
+/*------------------------------------------------------------
+*レイアウト
+------------------------------------------------------------*/
+body {
+	line-height : $is_base_text_lh;
+	color       : $is_text_color;
+
+	// SPへ切り替え
+	@include media_querys(0, $sp_break_w) {
+		min-width : $min_width;
+	}
+}
+
+.l-container {
+	display : block;
+
+	// PCへ切り替え
+	@include media_querys($pc_break_w) {
+		display : block;
+	}
+}
+
+.l-main {
+	display : block;
+}

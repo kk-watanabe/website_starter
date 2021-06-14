@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------
+*breadcrumbs - パンくず
+------------------------------------------------------------*/
+.l-breadcrumbs {
+	display : block;
+
+	// PCへ切り替え
+	@include media_querys(500px) {
+		display : block;
+	}
+
+	// SPへ切り替え
+	@include media_querys(0, $sp_break_w) {
+		display : block;
+	}
+}

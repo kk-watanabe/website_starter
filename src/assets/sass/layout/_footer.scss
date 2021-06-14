@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------
+*フッター
+------------------------------------------------------------*/
+.l-footer {
+	display : block;
+
+	// PCへ切り替え
+	@include media_querys($pc_break_w) {
+		display : block;
+	}
+
+	// SPへ切り替え
+	@include media_querys(0, $sp_break_w) {
+		display : block;
+	}
+}
