@@ -6,6 +6,7 @@ const meta = setting.meta;
 const $ = require("gulp-load-plugins")(config.loadPlugins);
 const webpack = require("webpack");
 const webpackConfig = require("./webpack.config");
+const path = require("path");
 
 // HTML
 gulp.task("html", () => {
@@ -116,13 +117,14 @@ gulp.task("scss",() => {
     .pipe($.browserSync.reload({ stream: true }));
 });
 
+// SVG
 gulp.task("svg", () => {
   return gulp.src(paths.svg.src)
     .pipe($.plumber({
       errorHandler: $.notify.onError("Error: <%= error.message %>") //<-
     }))
     .pipe($.svgmin((file) => {
-      const prefix = $.path.basename(file.relative, $.path.extname(file.relative));
+      const prefix = path.basename(file.relative, path.extname(file.relative));
 
       return { plugins: setting.svg.plugin(prefix) };
     }))
