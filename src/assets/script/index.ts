@@ -1,4 +1,4 @@
-import { getDevice } from "./utils"
+import { getDevice } from "./utils";
 
 window.onload = () => {
   //共通変数

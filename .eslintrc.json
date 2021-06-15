@@ -11,7 +11,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
+    "prettier"
   ],
   "plugins": [
     "@typescript-eslint"
@@ -29,17 +29,8 @@
     "no-import-assign": "off",
     "no-setter-return": "off",
     "no-console": 0,
-    "indent": [
-      "error",
-      2
-    ],
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "semi": [
-      "error",
-      "always"
+    "prettier/prettier": [
+      "error"
     ]
   }
 }

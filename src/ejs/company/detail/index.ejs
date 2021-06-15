@@ -1,21 +1,26 @@
+<!-- /#head -->
 <%- include(folderPath + '/assets/include/_head'); %>
+<!-- /#header -->
 <%- include(folderPath + '/assets/include/_header'); %>
+<!-- /#breadcrumbs -->
 <%- include(folderPath + '/assets/include/_breadcrumbs'); %>
 
-  <div class="l-main">
-    <main class="l-conts">
+<div class="l-main">
+  <main class="l-conts">
+    <section>
+      <h2>ページタイトル</h2>
       <section>
-        <h2>ページタイトル</h2>
+        <h3>中見出し</h3>
         <section>
-          <h3>中見出し</h3>
-          <section>
-            <h4>小見出し</h4>
-          </section>
+          <h4>小見出し</h4>
         </section>
       </section>
-    </main><!-- /#conts -->
+    </section>
+  </main>
+  <!-- /#conts -->
 
-<%- include(folderPath + '/assets/include/_subconts'); %>
-  </div><!-- /#main -->
+  <%- include(folderPath + '/assets/include/_subconts'); %>
+</div>
+<!-- /#main -->
 
 <%- include(folderPath + '/assets/include/_footer'); %>

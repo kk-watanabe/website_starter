@@ -1,0 +1,23 @@
+{
+  "csscomb.preset": "zen",
+  "csscomb.formatOnSave": true,
+  "editor.formatOnSave": true,
+  "eslint.options": {
+    "configFile": ".eslintrc.js"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.ejs": "html"
+  },
+  "emmet.includeLanguages": {
+    "ejs": "html"
+  }
+}
