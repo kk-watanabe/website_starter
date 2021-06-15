@@ -35,6 +35,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.ProvidePlugin(setting.webpack.providePlugin(setting.webpack.jqueryNecessary)),
+    setting.webpack.jqueryNecessary
+      ? new webpack.ProvidePlugin(setting.webpack.providePlugin(setting.webpack.jqueryNecessary))
+      : "",
   ],
 };

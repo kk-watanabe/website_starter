@@ -1,18 +1,97 @@
 const gulp = require("gulp");
-const config = require("./config");
-const paths = config.paths;
-const setting = config.setting;
-const meta = setting.meta;
-const $ = require("gulp-load-plugins")(config.loadPlugins);
-const webpack = require("webpack");
-const webpackConfig = require("./webpack.config");
 const path = require("path");
+const fs = require("fs");
+const $ = require("gulp-load-plugins")({
+  pattern: [
+    "gulp-*",
+    "gulp.*",
+    "browser-sync",
+    "imagemin-*",
+    "webpack-*",
+    "del",
+  ],
+  rename: {
+    "browser-sync": "browserSync",
+    "del": "del",
+    "imagemin-svgo": "imageminSvgo",
+    "imagemin-jpegtran": "imageminJpeg",
+    "imagemin-optipng": "imageminPng",
+    "webpack-stream": "webpackStream",
+    "gulp-connect-php": "connect"
+  }
+});
 
+// Path
+const srcPath = "src";
+const distPath = "dist";
+const assetsDirectory = "/assets/";
+const assetsSrcPath = `${srcPath}${assetsDirectory}`;
+const assetsDistPath = `${distPath}${assetsDirectory}`;
+const paths = {
+  sass: {
+    src: `${assetsSrcPath}sass/**/*.s+(a|c)ss`,
+    dist: `${assetsDistPath}css/`,
+  },
+  script: {
+    src: `${assetsSrcPath}script/`,
+    dist: `${assetsDistPath}script/`,
+  },
+  image: {
+    src: `${assetsSrcPath}img/**/*.+(jpg|jpeg|png|gif|svg)`,
+    dist: `${assetsDistPath}img/`,
+  },
+  include: {
+    src: `${assetsSrcPath}include/**/**.ejs`,
+  },
+  json: {
+    src: `${assetsSrcPath}json/*.json`
+  },
+  svg: {
+    src: `${assetsSrcPath}svg/*.svg`
+  },
+  html: {
+    src: [
+      `${srcPath}/ejs/**/*.ejs`,
+      `!${assetsSrcPath}include/**/_*.ejs` ,
+    ],
+    dist: distPath,
+  },
+  meta: `./meta.json`
+};
+
+// Error message
 const ERRORR_MESSAGE = "Error: <%= error.message %>";
 const errorPlumber = () => {
   return $.plumber({
     errorHandler: $.notify.onError(ERRORR_MESSAGE)
   });
+};
+
+// 「 ../ 」をdataの数で出力する
+const getFolderPass = (data) => {
+  const pathTxt = "../";
+
+  let addPath = "";
+
+  for (var i = 0; i < data.length; i++) {
+    addPath = addPath + pathTxt;
+  }
+
+  return addPath;
+}
+
+//フォルダのパスを取得し整形
+const getSiteData = (file) => {
+  const allPath = file.path.split("\\").join("/");
+  const allPaths = allPath.split("/ejs/");
+  const path = allPaths[1].replace(".ejs", "").split("/");
+  const pathUrl = allPaths[1].replace(".ejs", ".html");
+
+  return {
+    fileUrl: `/${pathUrl}`,
+    fileName: path,
+    folderPath: getFolderPass(path)
+  };
 };
 
 // HTML
@@ -21,12 +100,12 @@ gulp.task("html", () => {
     .pipe(errorPlumber())
     .pipe($.data(file => {
       //フォルダのパスを取得し整形
-      return setting.getSiteData(file);
+      return getSiteData(file);
     }))
-    .pipe($.ejs({ meta }, { rmWhitespace: true }))
+    .pipe($.ejs({ meta: JSON.parse(fs.readFileSync(paths.meta)) }, { rmWhitespace: true }))
     .pipe($.rename({ extname: ".html" }))
-    .pipe($.changed(paths.html.dest))
-    .pipe(gulp.dest(paths.html.dest))
+    .pipe($.changed(paths.html.dist))
+    .pipe(gulp.dest(paths.html.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
@@ -36,31 +115,42 @@ gulp.task("htmlhint", () => {
     .pipe($.htmlhint("./.htmlhintrc"))
     .pipe(errorPlumber())
     .pipe($.htmlhint.failOnError())
-    .pipe($.changed(paths.html.dest));
+    .pipe($.changed(paths.html.dist));
 });
 
 // JSON
 gulp.task("json", () =>{
   return gulp.src(paths.json.src)
     .pipe(errorPlumber())
-    .pipe($.changed(paths.script.dest))
-    .pipe(gulp.dest(paths.script.dest))
+    .pipe($.changed(paths.script.dist))
+    .pipe(gulp.dest(paths.script.dist))
     .pipe($.browserSync.reload({stream: true}));
 });
 
 const imageminOptions = [
-  $.imagemin.mozjpeg(setting.imagemin.jpg),
-  $.imagemin.optipng(setting.imagemin.png),
-  $.imagemin.svgo(setting.imagemin.svg)
+  $.imagemin.mozjpeg({
+    progressive: true
+  }),
+  $.imagemin.optipng({
+    optimizationLevel: 5
+  }),
+  $.imagemin.svgo(
+    {
+      plugins: [
+        { removeViewBox: true },
+        { cleanupIDs: false }
+      ]
+    }
+  )
 ];
 
 // 画像の圧縮
 gulp.task("imagemin", () => {
   return gulp.src(paths.image.src)
     .pipe(errorPlumber())
-    .pipe($.changed(paths.image.dest))
+    .pipe($.changed(paths.image.dist))
     .pipe($.imagemin(imageminOptions))
-    .pipe(gulp.dest(paths.image.dest))
+    .pipe(gulp.dest(paths.image.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
@@ -68,8 +158,8 @@ gulp.task("imagemin", () => {
 gulp.task("script", () => {
   return gulp.src(paths.script.src + "**/*.ts")
     .pipe(errorPlumber())
-    .pipe($.webpackStream(webpackConfig, webpack))
-    .pipe(gulp.dest(paths.script.dest))
+    // .pipe($.webpackStream(webpackConfig, webpack))
+    .pipe(gulp.dest(paths.script.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
@@ -90,7 +180,7 @@ gulp.task("scss",() => {
     ]))
     .pipe($.csso())
     .pipe($.sourcemaps.write("./maps"))
-    .pipe(gulp.dest(paths.sass.dest))
+    .pipe(gulp.dest(paths.sass.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
 
@@ -100,8 +190,14 @@ gulp.task("svg", () => {
     .pipe(errorPlumber())
     .pipe($.svgmin((file) => {
       const prefix = path.basename(file.relative, path.extname(file.relative));
+      const option = [{
+        cleanupIDs: {
+          prefix: prefix + "-",
+          minify: true
+        }
+      }];
 
-      return { plugins: setting.svg.plugin(prefix) };
+      return option;
     }))
     .pipe($.svgstore({ inlineSvg: true }))
 
@@ -115,11 +211,11 @@ gulp.task("svg", () => {
       },
       parserOptions: { xmlMode: true }
     }))
-    .pipe(gulp.dest(paths.image.dest));
+    .pipe(gulp.dest(paths.image.dist));
 });
 
 // Clean
-gulp.task("clean", $.del.bind(null, paths.base.dest));
+gulp.task("clean", $.del.bind(null, distPath));
 
 // Build
 gulp.task("build",
@@ -132,7 +228,7 @@ gulp.task("build",
 
 // Watch
 gulp.task("watch", () => {
-  $.browserSync.init({ server: { baseDir : paths.base.dest } });
+  $.browserSync.init({ server: { baseDir: distPath } });
 
   gulp.watch(paths.sass.src, gulp.task("scss"));
   gulp.watch(paths.script.src + "**/*.ts", gulp.task("script"));
