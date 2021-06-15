@@ -1,48 +1,40 @@
-@charset "UTF-8";
-
 /*------------------------------------------------------------
 *全体
 ------------------------------------------------------------*/
 /*-----aタグの制御-----*/
 a {
-	// PCへ切り替え
-	@include media_querys($pc_break_w) {
-		text-decoration : none;
+  @include media_querys($pc_break_w) {
+    text-decoration: none;
 
-		&:hover {
-			text-decoration : underline;
-		}
-	}
-
-	// SPへ切り替え
-	@include media_querys(0, $sp_break_w) {
-		text-decoration : underline;
-	}
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  @include media_querys(0, $sp_break_w) {
+    text-decoration: underline;
+  }
 }
-
 
 /*------------------------------------------------------------
 *レイアウト
 ------------------------------------------------------------*/
 body {
-	line-height : $is_base_text_lh;
-	color       : $is_text_color;
+  color: $is_text_color;
+  line-height: $is_base_text_lh;
 
-	// SPへ切り替え
-	@include media_querys(0, $sp_break_w) {
-		min-width : $min_width;
-	}
+  @include media_querys(0, $sp_break_w) {
+    min-width: $min_width;
+  }
 }
 
 .l-container {
-	display : block;
+  display: block;
 
-	// PCへ切り替え
-	@include media_querys($pc_break_w) {
-		display : block;
-	}
+  @include media_querys($pc_break_w) {
+    display: block;
+  }
 }
 
 .l-main {
-	display : block;
+  display: block;
 }

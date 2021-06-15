@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*------------------------------------------------------------
 *変数まとめ
 ------------------------------------------------------------*/
@@ -17,15 +16,15 @@
 * $sp_break_w・・・SPのブレークポイント
 ------------------------------------------------------------*/
 
-$max_width  : 1000px;
-$width      : 960px;
-$min_width  : 320px;
+$max_width: 1000px;
+$width: 960px;
+$min_width: 320px;
 
 //この数値以上がPC
-$pc_break_w : 801px;
+$pc_break_w: 801px;
 
 //この数値以下がSP
-$sp_break_w : $pc_break_w - 1;
+$sp_break_w: $pc_break_w - 1;
 
 /*------------------------------------------------------------
 * カラー定義
@@ -38,30 +37,30 @@ $sp_break_w : $pc_break_w - 1;
 * $is_color_wb02 : #000;
 ------------------------------------------------------------*/
 //サイトで基本となるテキストカラー
-$is_text_color : #333;
+$is_text_color: #333;
 
 //サイトで使用するテキストリンクカラー
-$is_link_color : #333;
+$is_link_color: #333;
 
 //テキストリンクho
-$is_link_hover_color : #333;
+$is_link_hover_color: #333;
 
 //テキストリンクactive
-$is_link_active_color : #333;
+$is_link_active_color: #333;
 
 //テキストリンクvisited
-$is_link_visited_color : #333;
+$is_link_visited_color: #333;
 
 //サイト全体で基本となるカラー
-$is_base_color : #fff;
+$is_base_color: #fff;
 
 //サイトで使用するサブカラー
-$is_sub01_color : #000;
-$is_sub02_color : #000;
+$is_sub01_color: #000;
+$is_sub02_color: #000;
 
 //上記ベース以外の追加カラー
-$is_color_wb01 : #fff;
-$is_color_wb02 : #000;
+$is_color_wb01: #fff;
+$is_color_wb02: #000;
 
 /*------------------------------------------------------------
 * z-index定義
@@ -76,8 +75,8 @@ $is_color_wb02 : #000;
 * $l-gnavi_num  : 300;
 ------------------------------------------------------------*/
 
-$l_header_num : 100;
-$l_gnavi_num  : 300;
+$l_header_num: 100;
+$l_gnavi_num: 300;
 
 /*------------------------------------------------------------
 * font-family定義
@@ -91,9 +90,10 @@ $l_gnavi_num  : 300;
 * $ff_meiryo: "メイリオ", "Meiryo", sans-serif;
 ------------------------------------------------------------*/
 
-$ff_all      : "メイリオ", "Meiryo", "ＭＳＰゴシック", "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, sans-serif;
-$ff_meiryo   : "メイリオ", "Meiryo", sans-serif;
-$ff_hirakaku : "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, sans-serif;
+$ff_all: "メイリオ", "Meiryo", "ＭＳＰゴシック", "ヒラギノ角ゴ ProN W3",
+  Hiragino Kaku Gothic ProN, Arial, sans-serif;
+$ff_meiryo: "メイリオ", "Meiryo", sans-serif;
+$ff_hirakaku: "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, sans-serif;
 
 /*------------------------------------------------------------
 * line-height定義
@@ -105,7 +105,7 @@ $ff_hirakaku : "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, sans-ser
 * $is_content_text_lh  : 2;
 ------------------------------------------------------------*/
 //サイトで基本となるテキストカラー
-$is_base_text_lh : 1.5;
+$is_base_text_lh: 1.5;
 
 /*------------------------------------------------------------
 * アニメーション速度
@@ -118,4 +118,4 @@ $is_base_text_lh : 1.5;
 * $anime_box01_duration  : 5s;
 ------------------------------------------------------------*/
 //基本アニメーション速度
-$anime_base_duration : .3s;
+$anime_base_duration: 0.3s;

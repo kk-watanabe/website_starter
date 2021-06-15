@@ -1,14 +1,13 @@
-@charset "UTF-8";
 /*------------------------------------------------------------
 *mixinで使用する
 ------------------------------------------------------------*/
 /*-----clearfix（float解除）-----*/
 @mixin cf {
-	&:after {
-		display : block;
-		clear   : both;
-		content : "";
-	}
+  &:after {
+    display: block;
+    clear: both;
+    content: "";
+  }
 }
 
 //////////////////
@@ -18,8 +17,8 @@
 
 /*-----疑似要素の基本読み込み-----*/
 @mixin pse_erem {
-	position : absolute;
-	content  : "";
+  position: absolute;
+  content: "";
 }
 //////////////////
 // example:
@@ -28,7 +27,7 @@
 
 /*-----fontの設定-----*/
 @mixin font_base {
-	font-family : $ff_all;
+  font-family: $ff_all;
 }
 //////////////////
 // example:
@@ -42,20 +41,20 @@
 * $max          単体であれば$max以上
 * $min          単体であれば$min以下
 ------------------------------------------------------------*/
-@mixin media_querys($max : 0, $min : 0) {
-	@if $max != 0 and $min != 0 {
-		@media only screen and (max-width : $max) and (min-width : $min) {
-			@content;
-		}
-	} @else if $max != 0 {
-		@media only screen and (min-width : $max) {
-			@content;
-		}
-	} @else if $min != 0 {
-		@media only screen and (max-width : $min) {
-			@content;
-		}
-	}
+@mixin media_querys($max: 0, $min: 0) {
+  @if $max != 0 and $min != 0 {
+    @media only screen and (max-width: $max) and (min-width: $min) {
+      @content;
+    }
+  } @else if $max != 0 {
+    @media only screen and (min-width: $max) {
+      @content;
+    }
+  } @else if $min != 0 {
+    @media only screen and (max-width: $min) {
+      @content;
+    }
+  }
 }
 //////////////////
 // example:
@@ -72,9 +71,9 @@
 * $parent   親要素を指定
 ------------------------------------------------------------*/
 @mixin parent_root($parent) {
-	@at-root #{$parent} {
-		@content;
-	}
+  @at-root #{$parent} {
+    @content;
+  }
 }
 //////////////////
 // example:
@@ -104,14 +103,14 @@
 * $rotate   ・・・ 角度
 ------------------------------------------------------------*/
 @mixin arrow($size, $bd_width, $color, $rotare) {
-	top          : 50%;
-	transform    : rotate($rotare);
-	margin-top   : -$size / 2;
-	border-top   : $bd_width solid $color;
-	border-right : $bd_width solid $color;
-	width        : $size;
-	height       : $size;
-	content      : "";
+  top: 50%;
+  margin-top: -$size / 2;
+  width: $size;
+  height: $size;
+  border-top: $bd_width solid $color;
+  border-right: $bd_width solid $color;
+  content: "";
+  transform: rotate($rotare);
 }
 //////////////////
 // example:

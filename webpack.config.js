@@ -1,14 +1,27 @@
-/**
- * Webpack関連まとめ
- */
-const config = require("./config");
-const setting = config.setting;
 const webpack = require("webpack");
+const path = require("path");
+const jqueryNecessary = false;
+
+const providePlugin = (judge) => {
+  let plugin = [];
+
+  if(judge) {
+    plugin["jQuery"]= "jquery";
+    plugin["$"]= "jquery";
+  }
+
+  return plugin;
+}
 
 module.exports = {
-  mode: setting.webpack.mode,
-  entry: setting.webpack.entry,
-  output: setting.webpack.output,
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  mode: "development",
+  entry: "./src/assets/script/index.ts",
+  output: {
+    path: path.join(__dirname, "dist/assets/script/"),
+    filename: "script.js"
+  },
   module: {
     rules: [
       {
@@ -34,9 +47,9 @@ module.exports = {
       ".ts", ".js",
     ],
   },
-  plugins: [
-    setting.webpack.jqueryNecessary
-      ? new webpack.ProvidePlugin(setting.webpack.providePlugin(setting.webpack.jqueryNecessary))
-      : "",
-  ],
+  optimization: {
+    minimize: true,
+  },
+  devtool: "inline-source-map",
+  plugins: providePlugin(jqueryNecessary),
 };

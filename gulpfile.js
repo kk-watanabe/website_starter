@@ -1,6 +1,8 @@
 const gulp = require("gulp");
 const path = require("path");
 const fs = require("fs");
+const webpack = require("webpack");
+const webpackConfig = require("./webpack.config");
 const $ = require("gulp-load-plugins")({
   pattern: [
     "gulp-*",
@@ -17,7 +19,6 @@ const $ = require("gulp-load-plugins")({
     "imagemin-jpegtran": "imageminJpeg",
     "imagemin-optipng": "imageminPng",
     "webpack-stream": "webpackStream",
-    "gulp-connect-php": "connect"
   }
 });
 
@@ -158,7 +159,7 @@ gulp.task("imagemin", () => {
 gulp.task("script", () => {
   return gulp.src(paths.script.src + "**/*.ts")
     .pipe(errorPlumber())
-    // .pipe($.webpackStream(webpackConfig, webpack))
+    .pipe($.webpackStream(webpackConfig, webpack))
     .pipe(gulp.dest(paths.script.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
@@ -167,12 +168,7 @@ gulp.task("script", () => {
 gulp.task("scss",() => {
   return gulp.src(paths.sass.src)
     .pipe($.sourcemaps.init())
-    .pipe($.sassLint({
-      configFile: "./.sass-lint.yml"
-    }))
     .pipe(errorPlumber())
-    .pipe($.sassLint.format())
-    .pipe($.sassLint.failOnError())
     .pipe($.sass({ outputStyle: "compressed" }))
     .pipe($.postcss([
       require("autoprefixer"),
