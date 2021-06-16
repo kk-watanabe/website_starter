@@ -106,6 +106,11 @@ gulp.task("html", () => {
     .pipe($.ejs({ meta: JSON.parse(fs.readFileSync(paths.meta)) }, { rmWhitespace: true }))
     .pipe($.rename({ extname: ".html" }))
     .pipe($.changed(paths.html.dist))
+    .pipe($.replace(/[\s\S]*?(<!DOCTYPE)/, '$1'))
+    .pipe($.htmlmin({
+      collapseWhitespace: false,
+      removeComments : true
+    }))
     .pipe(gulp.dest(paths.html.dist))
     .pipe($.browserSync.reload({ stream: true }));
 });
@@ -113,7 +118,7 @@ gulp.task("html", () => {
 // HTML
 gulp.task("htmlhint", () => {
   return gulp.src(paths.html.dest + "/**/*.html")
-    .pipe($.htmlhint("./.htmlhintrc"))
+    .pipe($.htmlhint(".htmlhintrc"))
     .pipe(errorPlumber())
     .pipe($.htmlhint.failOnError())
     .pipe($.changed(paths.html.dist));
@@ -228,7 +233,7 @@ gulp.task("watch", () => {
 
   gulp.watch(paths.sass.src, gulp.task("scss"));
   gulp.watch(paths.script.src + "**/*.ts", gulp.task("script"));
-  gulp.watch(paths.html.src, gulp.series("html", "htmlhint"));
+  gulp.watch(paths.html.src, gulp.series("html"));
   gulp.watch(paths.include.src, gulp.task("html"));
   gulp.watch(paths.json.src, gulp.task("json"));
   gulp.watch(paths.image.src, gulp.task("imagemin"));
