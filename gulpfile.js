@@ -233,7 +233,7 @@ gulp.task("watch", () => {
 
   gulp.watch(paths.sass.src, gulp.task("scss"));
   gulp.watch(paths.script.src + "**/*.ts", gulp.task("script"));
-  gulp.watch(paths.html.src, gulp.series("html"));
+  gulp.watch(paths.html.src, gulp.task("html"));
   gulp.watch(paths.include.src, gulp.task("html"));
   gulp.watch(paths.json.src, gulp.task("json"));
   gulp.watch(paths.image.src, gulp.task("imagemin"));
