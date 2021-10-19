@@ -1,26 +1,34 @@
-<!-- /#head -->
-<%- include(folderPath + '/assets/include/_head'); %>
-<!-- /#header -->
-<%- include(folderPath + '/assets/include/_header'); %>
+<!DOCTYPE html>
+<html lang="ja">
+  <%- include(folderPath + '/assets/include/_head'); %>
+  <body id="index">
+    <div class="l-container">
+      <%- include(folderPath + '/assets/include/_header'); %><!-- /#header -->
+      <%- include(folderPath + '/assets/include/_gnavi'); %>
 
-<div class="l-main">
-  <main class="l-conts">
-    <section>
-      <h2>ページタイトル</h2>
+      <div class="l-main">
+        <main class="l-conts">
+          <section>
+            <h2>ページタイトル</h2>
 
-      <section>
-        <h3>中見出し</h3>
+            <section>
+              <h3>中見出し</h3>
 
-        <section>
-          <h4>小見出し</h4>
-        </section>
-      </section>
-    </section>
-  </main>
-  <!-- /#conts -->
+              <section>
+                <h4>小見出し</h4>
+              </section>
+            </section>
+          </section>
+        </main>
+        <!-- /#conts -->
 
-  <%- include(folderPath + '/assets/include/_subconts'); %>
-</div>
-<!-- /#main -->
+        <%- include(folderPath + '/assets/include/_subconts'); %>
+      </div>
+      <!-- /#main -->
 
-<%- include(folderPath + '/assets/include/_footer'); %>
+      <%- include(folderPath + '/assets/include/_footer'); %>
+    </div>
+    <!-- /#l-container -->
+    <script src="/assets/script/bundle.min.js"></script>
+  </body>
+</html>

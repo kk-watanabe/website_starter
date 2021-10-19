@@ -1,6 +1,12 @@
-<div class="l-container">
-  <header class="l-header">
-    <h1>サンプルテキスト</h1>
-  </header>
+<header class="l-header">
+  <div class="l-header__col">
+    <h1 class="l-header__logo">サイトロゴdd</h1>
 
-<%- include('./_gnavi'); %>
+    <% const meta = getFileMeta(fileName); %> <% if (meta.body_id === 'index') {
+    %>
+    <div>testssssddd</div>
+    <% } else { %>
+    <div>test2ddddddd</div>
+    <% } %>
+  </div>
+</header>

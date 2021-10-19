@@ -6,6 +6,15 @@
     "keywords": "",
     "body_id": "index"
   },
+  "template": {
+    "index"  : {
+      "title": "template",
+      "breadcrumb": "template",
+      "description": "template",
+      "keywords": "",
+      "body_id": "template"
+    }
+  },
   "company": {
     "index"  : {
       "title": "test1 | test",

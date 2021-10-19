@@ -20,7 +20,7 @@ module.exports = {
   entry: "./src/assets/script/index.ts",
   output: {
     path: path.join(__dirname, "dist/assets/script/"),
-    filename: "script.js"
+    filename: "bundle.min.js"
   },
   module: {
     rules: [

@@ -42,7 +42,7 @@ const paths = {
     dist: `${assetsDistPath}img/`,
   },
   include: {
-    src: `${assetsSrcPath}include/**/**.ejs`,
+    src: `${assetsSrcPath}include/**/*.ejs`,
   },
   json: {
     src: `${assetsSrcPath}json/*.json`
@@ -53,7 +53,7 @@ const paths = {
   html: {
     src: [
       `${srcPath}/ejs/**/*.ejs`,
-      `!${assetsSrcPath}include/**/_*.ejs` ,
+      `!${assetsSrcPath}include/**/*.ejs` ,
     ],
     dist: distPath,
   },
@@ -122,6 +122,24 @@ gulp.task("htmlhint", () => {
     .pipe(errorPlumber())
     .pipe($.htmlhint.failOnError())
     .pipe($.changed(paths.html.dist));
+});
+
+// HTML
+gulp.task("include", () => {
+  return gulp.src(paths.html.src)
+    .pipe(errorPlumber())
+    .pipe($.data(file => {
+      //フォルダのパスを取得し整形
+      return getSiteData(file);
+    }))
+    .pipe($.ejs({ meta: JSON.parse(fs.readFileSync(paths.meta)) }, { rmWhitespace: true }))
+    .pipe($.rename({ extname: ".html" }))
+    .pipe($.htmlmin({
+      collapseWhitespace: false,
+      removeComments : true
+    }))
+    .pipe(gulp.dest(paths.html.dist))
+    .pipe($.browserSync.reload({ stream: true }));
 });
 
 // JSON
@@ -234,7 +252,7 @@ gulp.task("watch", () => {
   gulp.watch(paths.sass.src, gulp.task("scss"));
   gulp.watch(paths.script.src + "**/*.ts", gulp.task("script"));
   gulp.watch(paths.html.src, gulp.task("html"));
-  gulp.watch(paths.include.src, gulp.task("html"));
+  gulp.watch(paths.include.src, gulp.task("include"));
   gulp.watch(paths.json.src, gulp.task("json"));
   gulp.watch(paths.image.src, gulp.task("imagemin"));
 });
